@@ -4,6 +4,7 @@
 require(ggplot2)
 sugar <- read.csv("I:/Dropbox/UNR Sync/Book Proposal/1st round peer review/graph/sugar.csv")
 attach(sugar)
+avg=data.frame(x=sugar$YEAR,y=((sugar$M+sugar$G)/2))
 
 g <- ggplot(sugar, aes(YEAR,M,G))
 
@@ -16,7 +17,7 @@ g <- g + geom_point(aes(y=M, colour="Martinique", shape="Martinique",size="Marti
 g <- g + geom_point(aes(y=G, colour="Guadeloupe",shape="Guadeloupe",size="Guadeloupe"))
 
 #Smooth Line (Trend)
-g <- g + geom_smooth(method="loess",size=1, color="black",alpha=0.1,linetype="dashed")
+g <- g + geom_smooth(data=avg,aes(x,y), method="loess",size=1, color="black",alpha=0.1,linetype="dashed")
 
 #Legend
 g <- g + scale_colour_manual("Legend",breaks = c("Martinique","Guadeloupe"), values = c("black", "darkgray"))
@@ -33,4 +34,3 @@ g <- g + ylab("Tons of Sugar")
 
 g <- g + theme_bw()
 g
-
